@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.2.4
+
+### Patch Changes
+
+- c8ce01c: PolylineZ with multiple features now exports correctly
+
 ## 0.2.3
 
 ### Patch Changes
