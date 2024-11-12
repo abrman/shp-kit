@@ -31,8 +31,8 @@ const shpLength = (
   const file_header_length_bytes = 100;
   const records_header_length_bytes = features.length * 8;
   let polyline_record_length_bytes = 44 * features.length + parts * 4 + coordinates.length * 16;
-  if (typeString === "PolyLineM") polyline_record_length_bytes += 16 + coordinates.length * 8;
-  if (typeString === "PolyLineZ") polyline_record_length_bytes += 32 + coordinates.length * 16;
+  if (typeString === "PolyLineM") polyline_record_length_bytes += features.length * 16 + coordinates.length * 8;
+  if (typeString === "PolyLineZ") polyline_record_length_bytes += features.length * 32 + coordinates.length * 16;
   return file_header_length_bytes + records_header_length_bytes + polyline_record_length_bytes;
 };
 
