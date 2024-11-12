@@ -1,6 +1,6 @@
 {
   "name": "shp-kit",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Read & write shapefiles on the modern web.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
