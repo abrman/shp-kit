@@ -6,7 +6,7 @@ import { shpRead } from "..";
 describe("shpRead", () => {
   it("PointZ.001 - Airports of USA", async () => {
     const targetGeoJson = fs.readFileSync(path.join(__dirname, "test_results", "read", "PointZ", "001-PointZ.json"), {
-      encoding: "UTF-8",
+      encoding: "utf-8",
     });
 
     const shpBuffer = fs.readFileSync(
@@ -25,7 +25,7 @@ describe("shpRead", () => {
 
   it("PointZ.002 - Airports of USA with property data", async () => {
     const targetGeoJson = fs.readFileSync(path.join(__dirname, "test_results", "read", "PointZ", "002-PointZ.json"), {
-      encoding: "UTF-8",
+      encoding: "utf-8",
     });
 
     const shpBuffer = fs.readFileSync(

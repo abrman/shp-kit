@@ -8,7 +8,7 @@ describe("shpRead", () => {
     const targetGeoJson = fs.readFileSync(
       path.join(__dirname, "test_results", "read", "PolyLineZ", "001-PolyLineZ.json"),
       {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       }
     );
 
@@ -27,7 +27,7 @@ describe("shpRead", () => {
     const targetGeoJson = fs.readFileSync(
       path.join(__dirname, "test_results", "read", "PolyLineZ", "002-PolyLineZ.json"),
       {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       }
     );
 
@@ -49,7 +49,7 @@ describe("shpRead", () => {
     const targetGeoJson = fs.readFileSync(
       path.join(__dirname, "test_results", "read", "PolyLineZ", "003-PolyLineZ.json"),
       {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       }
     );
 

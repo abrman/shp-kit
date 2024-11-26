@@ -8,7 +8,7 @@ describe("shpRead", () => {
     const targetGeoJson = fs.readFileSync(
       path.join(__dirname, "test_results", "read", "PolyLine", "001-PolyLine.json"),
       {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       }
     );
 
@@ -28,7 +28,7 @@ describe("shpRead", () => {
     const targetGeoJson = fs.readFileSync(
       path.join(__dirname, "test_results", "read", "PolyLine", "002-PolyLine.json"),
       {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       }
     );
     const shpBuffer = fs.readFileSync(

@@ -65,7 +65,7 @@ const shpRead = async (
 
     const reader = readers[recordNumType as keyof typeof readers];
     if (!reader) {
-      continue;
+      throw new Error("Shapefile type not currently supported");
     }
 
     const feature = reader(

@@ -8,7 +8,7 @@ describe("shpWrite", () => {
   it("Point.001 - Airports of the USA", async () => {
     const geojson = JSON.parse(
       fs.readFileSync(path.join(__dirname, "assets", "airports-of-usa_purl.standofrd.edu-xp070bj0986.json"), {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "Point", "001-Point.shp"));
@@ -30,7 +30,7 @@ describe("shpWrite", () => {
       fs.readFileSync(
         path.join(__dirname, "assets", "airports-of-usa_multipoint.purl.standofrd.edu-xp070bj0986.json"),
         {
-          encoding: "UTF-8",
+          encoding: "utf-8",
         }
       )
     );

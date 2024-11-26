@@ -35,6 +35,8 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "@turf/helpers": "^7.1.0",
+    "@turf/turf": "^7.1.0",
     "buffer": "^6.0.3",
     "jszip": "^3.10.1",
     "proj4": "^2.10.0"

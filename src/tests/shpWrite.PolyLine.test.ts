@@ -6,7 +6,7 @@ import buffEqual from "../private/helpers/bufferEqualityCheck";
 
 describe("shpWrite", () => {
   it("PolyLine.001 - default options", async () => {
-    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "UTF-8" }));
+    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "utf-8" }));
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.shx"));
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.dbf"));
@@ -19,7 +19,7 @@ describe("shpWrite", () => {
   });
 
   it("PolyLine.002 - no multi-types", async () => {
-    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "UTF-8" }));
+    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "utf-8" }));
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "002-PolyLine.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "002-PolyLine.shx"));
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "002-PolyLine.dbf"));
@@ -34,7 +34,7 @@ describe("shpWrite", () => {
   });
 
   it("PolyLine.003 - no polygons parsed as lines", async () => {
-    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "UTF-8" }));
+    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "utf-8" }));
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "003-PolyLine.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "003-PolyLine.shx"));
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "003-PolyLine.dbf"));
@@ -49,7 +49,7 @@ describe("shpWrite", () => {
   });
 
   it("PolyLine.004 - no polygons parsed as lines or muli-types", async () => {
-    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "UTF-8" }));
+    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "utf-8" }));
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "004-PolyLine.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "004-PolyLine.shx"));
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "004-PolyLine.dbf"));
@@ -65,7 +65,7 @@ describe("shpWrite", () => {
   });
 
   it("PolyLine.005 - additional insignificant invalid options", async () => {
-    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "UTF-8" }));
+    const geojson = JSON.parse(fs.readFileSync(path.join(__dirname, "assets", "example.json"), { encoding: "utf-8" }));
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.shx"));
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLine", "001-PolyLine.dbf"));

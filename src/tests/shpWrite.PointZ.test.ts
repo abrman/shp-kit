@@ -8,7 +8,7 @@ describe("shpWrite", () => {
   it("PointZ.001 - Airports of the USA, Elevation from coordinates", async () => {
     const geojson = JSON.parse(
       fs.readFileSync(path.join(__dirname, "assets", "airports-of-usa_purl.standofrd.edu-xp070bj0986.json"), {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PointZ", "001-PointZ.shp"));
@@ -28,7 +28,7 @@ describe("shpWrite", () => {
   it("PointZ.002 - Airports of the USA, Elevation from property", async () => {
     const geojson = JSON.parse(
       fs.readFileSync(path.join(__dirname, "assets", "airports-of-usa_purl.standofrd.edu-xp070bj0986.json"), {
-        encoding: "UTF-8",
+        encoding: "utf-8",
       })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PointZ", "002-PointZ.shp"));
@@ -52,7 +52,7 @@ describe("shpWrite", () => {
       fs.readFileSync(
         path.join(__dirname, "assets", "airports-of-usa_multipoint.purl.standofrd.edu-xp070bj0986.json"),
         {
-          encoding: "UTF-8",
+          encoding: "utf-8",
         }
       )
     );

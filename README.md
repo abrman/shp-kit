@@ -10,15 +10,15 @@ The following table outlines the current support for different types of shapefil
 | -------------- | ---- | ----- |
 | Point          | ✅   | ✅    |
 | PolyLine       | ✅   | ✅    |
-| Polygon        | ❌   | ❌    |
+| Polygon        | ✅   | ✅    |
 | MultiPoint     | ❌   | ❌    |
 | PointZ         | ✅   | ✅    |
 | PolyLineZ      | ✅   | ✅    |
-| PolygonZ       | ❌   | ❌    |
+| PolygonZ       | ✅   | ✅    |
 | MultiPointZ    | ❌   | ❌    |
 | PointM         | ✅   | ✅    |
 | ⚠ PolyLineM    | ✅   | ✅    |
-| ⚠ PolygonM     | ❌   | ❌    |
+| ⚠ PolygonM     | ✅   | ✅    |
 | ⚠ MultiPointM  | ❌   | ❌    |
 | MultiPatch     | ❌   | ❌    |
 

@@ -7,7 +7,7 @@ import buffEqual from "../private/helpers/bufferEqualityCheck";
 describe("shpWrite", () => {
   it("PolyLineZ.001 - LineString, default options", async () => {
     const geojson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, "assets", "eldorado_peak_trail.json"), { encoding: "UTF-8" })
+      fs.readFileSync(path.join(__dirname, "assets", "eldorado_peak_trail.json"), { encoding: "utf-8" })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ.shx"));
@@ -25,7 +25,7 @@ describe("shpWrite", () => {
 
   it("PolyLineZ.002 - MultiLineString, default options", async () => {
     const geojson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "UTF-8" })
+      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "utf-8" })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "002-PolyLineZ.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "002-PolyLineZ.shx"));
@@ -43,7 +43,7 @@ describe("shpWrite", () => {
 
   it("PolyLineZ.003 - MultiLineString, elevation from feature property", async () => {
     const geojson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "UTF-8" })
+      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "utf-8" })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "003-PolyLineZ.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "003-PolyLineZ.shx"));
@@ -63,7 +63,7 @@ describe("shpWrite", () => {
 
   it("PolyLineZ.004 - MultiLineString, elevation array from feature properties", async () => {
     const geojson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "UTF-8" })
+      fs.readFileSync(path.join(__dirname, "assets", "mount_shasta_trails_multiLineString.json"), { encoding: "utf-8" })
     );
     const shpBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "004-PolyLineZ.shp"));
     const shxBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "004-PolyLineZ.shx"));
