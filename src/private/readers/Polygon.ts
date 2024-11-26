@@ -81,7 +81,9 @@ const Polygon = (
                         ? list
                         : [
                             ...list,
-                            [...Array(v - (a[i - 1] as number))].map((_, j) => zValues[(a[i - 1] as number) + j]),
+                            [...Array(v - (a[i - 1] as number))].map((_, j) =>
+                              zValues ? zValues[(a[i - 1] as number) + j] : 0
+                            ),
                           ],
                     [] as any[]
                   ),
@@ -98,7 +100,9 @@ const Polygon = (
                         ? list
                         : [
                             ...list,
-                            [...Array(v - (a[i - 1] as number))].map((_, j) => mValues[(a[i - 1] as number) + j]),
+                            [...Array(v - (a[i - 1] as number))].map((_, j) =>
+                              mValues ? mValues[(a[i - 1] as number) + j] : 0
+                            ),
                           ],
                     [] as any[]
                   ),

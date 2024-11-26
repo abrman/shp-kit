@@ -1,4 +1,13 @@
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry, LineString, MultiPolygon, Position } from "geojson";
+import {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+  LineString,
+  MultiPolygon,
+  Polygon,
+  Position,
+} from "geojson";
 import { ShapefileTypesNumber, shapefileNumberTypeToStringType } from "../helpers/shapefileTypes";
 import { Options } from "../../public/shpWrite";
 import boundingBoxFromFeaturesList from "../helpers/boundingBoxFromCoordinateList";
@@ -34,7 +43,9 @@ const breakIntoSinglePolygons = (
     });
   if (feature.geometry.type === "GeometryCollection") {
     const features = breakGeometryCollectionsFromFeatureList([feature]) as Feature<Geometry, GeoJsonProperties>[];
-    return features.flatMap(breakIntoSinglePolygons) as Feature<GeoJSON.Polygon, GeoJsonProperties>[];
+    return features.reduce((acc, feature) => {
+      return acc.concat(breakIntoSinglePolygons(feature));
+    }, [] as Feature<Polygon, GeoJsonProperties>[]) as Feature<GeoJSON.Polygon, GeoJsonProperties>[]; // .flatMap(breakIntoSinglePolygons)
   }
   return [] as Feature<GeoJSON.Polygon, GeoJsonProperties>[];
 };
@@ -149,7 +160,9 @@ const shpLength = (
   o: Options
 ) => {
   features = features
-    .flatMap(breakIntoSinglePolygons)
+    .reduce((acc, feature) => {
+      return acc.concat(breakIntoSinglePolygons(feature));
+    }, [] as Feature<Polygon, GeoJsonProperties>[]) // .flatMap(breakIntoSinglePolygons)
     .map((f) => closeUnclosedPolygonsAndRemoveRedundantDuplicatePoints(f, false))
     .map((f) => unkink(f, false));
   const typeString = shapefileNumberTypeToStringType(shpTypeNumber);
@@ -168,7 +181,9 @@ const shxLength = (
   shpTypeNumber: ShapefileTypesNumber,
   o: Options
 ) => {
-  features = features.flatMap(breakIntoSinglePolygons);
+  features = features.reduce((acc, feature) => {
+    return acc.concat(breakIntoSinglePolygons(feature));
+  }, [] as Feature<Polygon, GeoJsonProperties>[]); // .flatMap(breakIntoSinglePolygons);
   const file_header_length_bytes = 100;
   const records_length_bytes = features.length * 8;
   return file_header_length_bytes + records_length_bytes;
@@ -184,7 +199,9 @@ const write = (
   let currByteIndex = 100;
 
   features
-    .flatMap(breakIntoSinglePolygons)
+    .reduce((acc, feature) => {
+      return acc.concat(breakIntoSinglePolygons(feature));
+    }, [] as Feature<Polygon, GeoJsonProperties>[]) // .flatMap(breakIntoSinglePolygons)
     .map((f) => closeUnclosedPolygonsAndRemoveRedundantDuplicatePoints(f, true))
     .map((f) => unkink(f, true))
     .forEach((feature, index) => {
@@ -360,16 +377,20 @@ const dbfProps = (
   o: Options
 ) => {
   let props: any, prop;
-  const propList = features.flatMap(breakIntoSinglePolygons).map((f) => {
-    props = {};
-    Object.keys(f.properties || []).forEach((key) => {
-      prop = (f.properties as any)[key];
-      if (typeof prop !== "undefined") {
-        props[key] = prop;
-      }
+  const propList = features
+    .reduce((acc, feature) => {
+      return acc.concat(breakIntoSinglePolygons(feature));
+    }, [] as Feature<Polygon, GeoJsonProperties>[]) // .flatMap(breakIntoSinglePolygons)
+    .map((f) => {
+      props = {};
+      Object.keys(f.properties || []).forEach((key) => {
+        prop = (f.properties as any)[key];
+        if (typeof prop !== "undefined") {
+          props[key] = prop;
+        }
+      });
+      return props;
     });
-    return props;
-  });
   return propList;
 };
 
