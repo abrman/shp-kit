@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.3.0
+
+### Minor Changes
+
+- 7d26bf2: Implemented Polygon write and read
+
 ## 0.2.4
 
 ### Patch Changes
