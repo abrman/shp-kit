@@ -34,7 +34,7 @@ const reprojectGeoJson = (
 
     if (feature.geometry) {
       if (originalGeometryPropertyKey && feature.properties)
-        feature.properties[originalGeometryPropertyKey] = { ...feature.geometry };
+        feature.properties[originalGeometryPropertyKey] = JSON.parse(JSON.stringify(feature.geometry));
 
       if (sourceProjection !== targetProjection) {
         (feature.geometry as any).coordinates = transformCoordinates(
