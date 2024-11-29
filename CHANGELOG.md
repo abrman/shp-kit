@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.4.0
+
+### Minor Changes
+
+- ef02660: Added support for UTF-8 characters in Dbf, credit: @whlysu
+
 ## 0.3.1
 
 ### Patch Changes
