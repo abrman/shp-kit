@@ -15,7 +15,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("001-PolyLine.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("001-PolyLine.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("001-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("001-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLine.002 - no multi-types", async () => {
@@ -30,7 +30,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("002-PolyLine.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("002-PolyLine.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("002-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("002-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLine.003 - no polygons parsed as lines", async () => {
@@ -45,7 +45,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("003-PolyLine.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("003-PolyLine.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("003-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("003-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLine.004 - no polygons parsed as lines or muli-types", async () => {
@@ -61,7 +61,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("004-PolyLine.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("004-PolyLine.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("004-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("004-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLine.005 - additional insignificant invalid options", async () => {
@@ -77,6 +77,6 @@ describe("shpWrite", () => {
 
     expect(buffEqual("005-PolyLine.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("005-PolyLine.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("005-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("005-PolyLine.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 });

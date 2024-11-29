@@ -1,4 +1,5 @@
 import createDataView from "../helpers/createDataView";
+
 type FieldMeta = {
   field_key: string;
   field_name: string;
@@ -9,22 +10,33 @@ type FieldMeta = {
 
 type Properties = { [key: string]: string | number | boolean | object | any[] }[];
 
-const formatStringField = (input: string, len: number) => {
-  const limitedString = input.substring(0, len);
-  const remainingSpaces = Math.max(0, len - limitedString.length);
-  const result = limitedString + " ".repeat(remainingSpaces);
+const truncateByByteLength = (input: string, maxLength: number) => {
+  if (new TextEncoder().encode(input).length < maxLength) return input;
+  let byteCount = 0;
+  let result = "";
+  for (const char of input) {
+    const charLength = new TextEncoder().encode(char).length;
+    if (byteCount + charLength > maxLength) break;
+    byteCount += charLength;
+    result += char;
+  }
+
   return result;
+};
+const formatStringField = (input: string, len: number) => {
+  const truncatedString = truncateByByteLength(input, len);
+  const remainingSpaces = Math.max(0, len - new TextEncoder().encode(truncatedString).length);
+  return truncatedString + " ".repeat(remainingSpaces);
 };
 
 const formatNumField = (input: number, len: number, decimalSpaces: number) => {
   const formattedNumber = input.toFixed(decimalSpaces);
   const remainingSpaces = Math.max(0, len - formattedNumber.length);
-  const result = " ".repeat(remainingSpaces) + formattedNumber;
-  return result;
+  return " ".repeat(remainingSpaces) + formattedNumber;
 };
 
 const getMeta = (properties: Properties) => {
-  const fieldsMetaObjecet: {
+  const fieldsMetaObject: {
     [key: string]: FieldMeta;
   } = {};
   let value: any;
@@ -35,8 +47,8 @@ const getMeta = (properties: Properties) => {
       value = props[key];
 
       if (typeof value === "boolean") {
-        if (typeof fieldsMetaObjecet[key] === "undefined") {
-          fieldsMetaObjecet[key] = {
+        if (typeof fieldsMetaObject[key] === "undefined") {
+          fieldsMetaObject[key] = {
             field_key: key,
             field_name: key,
             field_type: "L",
@@ -44,51 +56,41 @@ const getMeta = (properties: Properties) => {
             field_decimal_length: 0,
           };
         }
-      }
-
-      if (typeof value === "string") {
-        if (typeof fieldsMetaObjecet[key] === "undefined") {
-          fieldsMetaObjecet[key] = {
+      } else if (typeof value === "string") {
+        const encodedLength = new TextEncoder().encode(value).length;
+        if (typeof fieldsMetaObject[key] === "undefined") {
+          fieldsMetaObject[key] = {
             field_key: key,
             field_name: key,
             field_type: "C",
-            field_length: value.length,
+            field_length: Math.min(254, encodedLength),
             field_decimal_length: 0,
           };
         } else {
-          (fieldsMetaObjecet[key] as FieldMeta).field_length = Math.min(
+          fieldsMetaObject[key].field_length = Math.min(
             254,
-            Math.max(value.length, (fieldsMetaObjecet[key] as FieldMeta).field_length)
+            Math.max(value.length, fieldsMetaObject[key].field_length)
           );
         }
-      }
-
-      if (typeof value === "number") {
-        if (typeof fieldsMetaObjecet[key] === "undefined") {
-          decimal = String(value).split(".")[1]?.length;
-          fieldsMetaObjecet[key] = {
+      } else if (typeof value === "number") {
+        decimal = String(value).split(".")[1]?.length || 0;
+        length = String(value).length;
+        if (typeof fieldsMetaObject[key] === "undefined") {
+          fieldsMetaObject[key] = {
             field_key: key,
             field_name: key,
             field_type: "N",
-            field_length: String(value).length,
-            field_decimal_length: decimal ? decimal : 0,
+            field_length: length,
+            field_decimal_length: decimal,
           };
         } else {
-          decimal = String(value).split(".")[1]?.length;
-          length = String(value).length;
-          (fieldsMetaObjecet[key] as FieldMeta).field_length = Math.min(
-            254,
-            Math.max(length, (fieldsMetaObjecet[key] as FieldMeta).field_length)
-          );
-          (fieldsMetaObjecet[key] as FieldMeta).field_decimal_length = Math.max(
-            decimal,
-            (fieldsMetaObjecet[key] as FieldMeta).field_decimal_length
-          );
+          fieldsMetaObject[key].field_length = Math.min(254, Math.max(length, fieldsMetaObject[key].field_length));
+          fieldsMetaObject[key].field_decimal_length = Math.max(decimal, fieldsMetaObject[key].field_decimal_length);
         }
       }
     });
   });
-  const recordLength = Object.values(fieldsMetaObjecet).reduce((total, meta) => {
+  const recordLength = Object.values(fieldsMetaObject).reduce((total, meta) => {
     return total + meta.field_length;
   }, 1); // 1 - Data records are preceded by one byte, that is, a space (20h) if the record is not deleted, an asterisk (2Ah) if the record is deleted.
 
@@ -98,17 +100,17 @@ const getMeta = (properties: Properties) => {
     let uniqueName = name;
     let counter = 1;
     while (existingKeys.has(uniqueName)) {
-      uniqueName = `${counter.toString().padStart(3, "0")}.${name}`.substring(0, 10);
+      uniqueName = truncateByByteLength(`${counter.toString().padStart(2, "0")}.${name}`, 10);
       counter++;
     }
     existingKeys.add(uniqueName);
     return uniqueName;
   };
 
-  const fieldsMeta = Object.values(fieldsMetaObjecet).map((v) => {
+  const fieldsMeta = Object.values(fieldsMetaObject).map((v) => {
     return {
       ...v,
-      field_name: makeUniqueKey(v.field_name.substring(0, 10)),
+      field_name: makeUniqueKey(truncateByByteLength(v.field_name, 10)),
     } as FieldMeta;
   });
   return { fieldsMeta, recordLength };
@@ -118,8 +120,8 @@ const dbf = (records: { [key: string]: string | number | boolean | object | any[
 
   const fileByteLength =
     32 + // Header
-    32 * fieldsMeta.length + // Header descriptors
-    1 + // 0x0D field terminator
+    32 * fieldsMeta.length + // Header fields descriptors
+    1 + // 0x0D field Header terminator
     recordLength * records.length + // Records
     1; // 0x1A file-end marker
 
@@ -135,7 +137,8 @@ const dbf = (records: { [key: string]: string | number | boolean | object | any[
 
   dbfView.setInt32(4, records.length, true); // records count
   dbfView.setInt16(8, 32 + fieldsMeta.length * 32 + 1, true); // header length
-  dbfView.setInt16(10, recordLength, true); // header length
+  dbfView.setInt16(10, recordLength, true); // records length
+  dbfView.setUint8(29, 0x30); // 0x30, Standard ASCII encoding
 
   fieldsMeta.forEach((meta, mi) => {
     for (let i = 0; i < 10; i++) {
@@ -146,28 +149,25 @@ const dbf = (records: { [key: string]: string | number | boolean | object | any[
     dbfView.setUint8(32 + mi * 32 + 17, meta.field_decimal_length);
   });
 
-  dbfView.setUint8(32 + fieldsMeta.length * 32, 13); // Day
+  dbfView.setUint8(32 + fieldsMeta.length * 32, 13); // Header terminator
 
-  const headerOffset = 32 + fieldsMeta.length * 32 + 1;
+  const recordStart = 32 + fieldsMeta.length * 32 + 1;
 
-  records.forEach((record, ri) => {
+  records.forEach((record, recordIndex) => {
     let recordOffset = 1;
-    dbfView.setUint8(headerOffset + ri * recordLength, " ".charCodeAt(0));
+    dbfView.setUint8(recordStart + recordIndex * recordLength, 0x20); // 0x20 = " ".charCodeAt(0);
     fieldsMeta.forEach((field) => {
+      const value = record[field.field_key];
       if (field.field_type === "C") {
-        const string = formatStringField((record[field.field_key] as string) || "", field.field_length);
-        for (let i = 0; i < string.length; i++) {
-          dbfView.setUint8(headerOffset + ri * recordLength + recordOffset + i, string.charCodeAt(i));
+        const string = formatStringField((value as string) || "", field.field_length);
+        const utfEncoded = new TextEncoder().encode(string);
+        for (let i = 0; i < field.field_length; i++) {
+          dbfView.setUint8(recordStart + recordIndex * recordLength + recordOffset + i, utfEncoded[i] || 0x20);
         }
-      }
-      if (field.field_type === "N") {
-        const num = formatNumField(
-          (record[field.field_key] as number) || -1,
-          field.field_length,
-          field.field_decimal_length
-        );
+      } else if (field.field_type === "N") {
+        const num = formatNumField((value as number) || -1, field.field_length, field.field_decimal_length);
         for (let i = 0; i < num.length; i++) {
-          dbfView.setUint8(headerOffset + ri * recordLength + recordOffset + i, num.charCodeAt(i));
+          dbfView.setUint8(recordStart + recordIndex * recordLength + recordOffset + i, num.charCodeAt(i));
         }
       }
       recordOffset += field.field_length;

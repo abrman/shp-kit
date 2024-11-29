@@ -23,7 +23,7 @@ const shpWrite = async (geojson: FeatureCollection, type: ShapefileTypesString, 
   if (!numType) throw new Error("Invalid shapefile type");
 
   const writer = writers[numType as keyof typeof writers];
-  if (!writer) throw new Error("Shapefile type not currently supported");
+  if (!writer) throw new Error(`Shapefile type ${type} not currently supported`);
 
   const { extents, shpLength, shxLength, filterFeatures, write, dbfProps } = writer;
 

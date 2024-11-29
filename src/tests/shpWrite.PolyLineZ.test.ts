@@ -14,13 +14,16 @@ describe("shpWrite", () => {
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ.dbf"));
 
     const { shp, shx, dbf } = await shpWrite(geojson, "PolyLineZ");
-    // fs.writeFile(path.join(__dirname, "output", "001-PolyLineZ.shp"), shp, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "001-PolyLineZ.shx"), shx, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "001-PolyLineZ.dbf"), dbf, () => {});
+    // // prettier-ignore
+    // fs.writeFile(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ-test.shp"), Buffer.from(shp), () => {});
+    // // prettier-ignore
+    // fs.writeFile(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ-test.shx"), Buffer.from(shx), () => {});
+    // // prettier-ignore
+    // fs.writeFile(path.join(__dirname, "test_results", "write", "PolyLineZ", "001-PolyLineZ-test.dbf"), Buffer.from(dbf), () => {});
 
     expect(buffEqual("001-PolyLineZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("001-PolyLineZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("001-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("001-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLineZ.002 - MultiLineString, default options", async () => {
@@ -38,7 +41,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("002-PolyLineZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("002-PolyLineZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("002-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("002-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLineZ.003 - MultiLineString, elevation from feature property", async () => {
@@ -58,7 +61,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("003-PolyLineZ.shp", shpBuffer, shp, [73, 74, 81, 82, 22261, 22262, 22269, 22270])).toBe(true);
     expect(buffEqual("003-PolyLineZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("003-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("003-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PolyLineZ.004 - MultiLineString, elevation array from feature properties", async () => {
@@ -70,12 +73,9 @@ describe("shpWrite", () => {
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PolyLineZ", "004-PolyLineZ.dbf"));
 
     const { shp, shx, dbf } = await shpWrite(geojson, "PolyLineZ");
-    // fs.writeFile(path.join(__dirname, "output", "004-PolyLineZ.shp"), shp, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "004-PolyLineZ.shx"), shx, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "004-PolyLineZ.dbf"), dbf, () => {});
 
     expect(buffEqual("004-PolyLineZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("004-PolyLineZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("004-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("004-PolyLineZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 });

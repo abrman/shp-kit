@@ -16,13 +16,10 @@ describe("shpWrite", () => {
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PointZ", "001-PointZ.dbf"));
 
     const { shp, shx, dbf } = await shpWrite(geojson, "PointZ");
-    // fs.writeFile(path.join(__dirname, "output", "001-PointZ.shp"), shp, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "001-PointZ.shx"), shx, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "001-PointZ.dbf"), dbf, () => {});
 
     expect(buffEqual("001-PointZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("001-PointZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("001-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("001-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PointZ.002 - Airports of the USA, Elevation from property", async () => {
@@ -38,13 +35,10 @@ describe("shpWrite", () => {
     const { shp, shx, dbf } = await shpWrite(geojson, "PointZ", {
       elevationPropertyKey: "elev",
     });
-    // fs.writeFile(path.join(__dirname, "output", "002-PointZ.shp"), shp, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "002-PointZ.shx"), shx, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "002-PointZ.dbf"), dbf, () => {});
 
     expect(buffEqual("002-PointZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("002-PointZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("002-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("002-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("PointZ.003 - Airports of the USA from MultiPoint Features, Elevation from coordinates", async () => {
@@ -61,12 +55,9 @@ describe("shpWrite", () => {
     const dbfBuffer = fs.readFileSync(path.join(__dirname, "test_results", "write", "PointZ", "003-PointZ.dbf"));
 
     const { shp, shx, dbf } = await shpWrite(geojson, "PointZ");
-    // fs.writeFile(path.join(__dirname, "output", "003-PointZ.shp"), shp, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "003-PointZ.shx"), shx, () => {});
-    // fs.writeFile(path.join(__dirname, "output", "003-PointZ.dbf"), dbf, () => {});
 
     expect(buffEqual("003-PointZ.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("003-PointZ.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("003-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("003-PointZ.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 });

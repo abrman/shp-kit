@@ -22,7 +22,7 @@ describe("shpWrite", () => {
 
     expect(buffEqual("001-Point.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("001-Point.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("001-Point.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("001-Point.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 
   it("Point.002 - Airports of the USA from MultiPoint Features", async () => {
@@ -45,6 +45,6 @@ describe("shpWrite", () => {
 
     expect(buffEqual("002-Point.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("002-Point.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("002-Point.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("002-Point.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 });

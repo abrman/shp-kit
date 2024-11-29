@@ -34,6 +34,6 @@ describe("shpWrite", () => {
 
     expect(buffEqual("001-Polygon.shp", shpBuffer, shp)).toBe(true);
     expect(buffEqual("001-Polygon.shx", shxBuffer, shx)).toBe(true);
-    expect(buffEqual("001-Polygon.dbf", dbfBuffer, dbf, [1, 2, 3])).toBe(true); // [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
+    expect(buffEqual("001-Polygon.dbf", dbfBuffer, dbf, [1, 2, 3, 29])).toBe(true); // [29] language bit, updated during UTF-8 support [1,2,3] Indexes of current date, 1. Year -1900, 2. Month index (Starting at 1 for January), 3. Day of month
   });
 });
