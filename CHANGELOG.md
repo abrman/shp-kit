@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.3.1
+
+### Patch Changes
+
+- a64eed5: ReprojectGeoJson didn't contain elevation data in raw geometry in some occasions.
+
 ## 0.3.0
 
 ### Minor Changes
