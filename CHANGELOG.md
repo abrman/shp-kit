@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.4.2
+
+### Patch Changes
+
+- 9b3c49d: Fix: Skip null features and correctly increment feature index number
+
 ## 0.4.1
 
 ### Patch Changes
