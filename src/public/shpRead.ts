@@ -65,9 +65,11 @@ const shpRead = async (
 
     const reader = readers[recordNumType as keyof typeof readers];
 
-    // Skip empty shapes
+    // Skip null shapes
     if (recordNumType === 0) {
+      currFeatureIndex++;
       currByteIndex += recordLength;
+      continue;
     }
 
     if (!reader) {
@@ -82,6 +84,12 @@ const shpRead = async (
       shapefileNumberTypeToStringType(recordNumType as ShapefileTypesNumber),
       dbfProps ? dbfProps[currFeatureIndex] || {} : {}
     );
+
+    // Only push if geometry is valid
+    if (feature && feature.geometry) {
+      output.features.push(feature);
+    }
+
     output.features.push(feature);
     currFeatureIndex++;
     currByteIndex += recordLength;
