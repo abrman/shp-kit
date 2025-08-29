@@ -90,7 +90,6 @@ const shpRead = async (
       output.features.push(feature);
     }
 
-    output.features.push(feature);
     currFeatureIndex++;
     currByteIndex += recordLength;
   }
