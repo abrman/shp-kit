@@ -1,5 +1,11 @@
 # shp-kit
 
+## 0.4.1
+
+### Patch Changes
+
+- ae93bf8: Fix: Skipping null shapes that some shapefile editors leave behind rather than throwing error
+
 ## 0.4.0
 
 ### Minor Changes
