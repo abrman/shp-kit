@@ -60,10 +60,16 @@ const shpRead = async (
   while (currByteIndex + 4 < shpView.buffer.byteLength - 1) {
     // const recordNum = shpView.getInt32(currByteIndex); // Record number
     const recordLength = shpView.getInt32(currByteIndex + 4) * 2 + 8; // Record length
-    const recordNumType = shpView.getInt32(currByteIndex + 8, true) as ShapefileTypesNumber;
+    const recordNumType = shpView.getInt32(currByteIndex + 8, true);
     if (recordLength === 0) break;
 
     const reader = readers[recordNumType as keyof typeof readers];
+
+    // Skip empty shapes
+    if (recordNumType === 0) {
+      currByteIndex += recordLength;
+    }
+
     if (!reader) {
       throw new Error("Shapefile type not currently supported");
     }
@@ -73,7 +79,7 @@ const shpRead = async (
       o,
       currByteIndex + 8,
       recordLength,
-      shapefileNumberTypeToStringType(recordNumType),
+      shapefileNumberTypeToStringType(recordNumType as ShapefileTypesNumber),
       dbfProps ? dbfProps[currFeatureIndex] || {} : {}
     );
     output.features.push(feature);
