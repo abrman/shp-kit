@@ -99,8 +99,8 @@ shpRead: (
 ```typescript
 reprojectGeoJson: (
   geojson: FeatureCollection, // GeoJSON feature collection
-  sourceProjection: string, // Can be either PROJ.4 string or WKT string, such as you find in the *.prj file with your shapefile (if provided)
-  targetProjection: string, // Can be either PROJ.4 string or WKT string, such as you find in the *.prj file with your shapefile (if provided)
+  sourceProjection: string, // Can be either PROJ4 string or WKT string, such as you find in the *.prj file with your shapefile (if provided)
+  targetProjection: string, // Can be either PROJ4 string or WKT string, such as you find in the *.prj file with your shapefile (if provided)
   originalGeometryPropertyKey?: string // Key under which you would like the original geometry to be saved. Useful when showing feature on a WGS84 map while showing feature coordinates on select/hover in another coordinate system
 ) => FeatureCollection // GeoJSON feature collection
 ```
