@@ -1,5 +1,15 @@
 # shp-kit
 
+## 0.5.0
+
+### Minor Changes
+
+- 6543fb9: Replaced proj4 dependency with mproj, which has more accurate transformation results.
+
+### Patch Changes
+
+- e9945c9: Updated github action
+
 ## 0.4.2
 
 ### Patch Changes
